@@ -393,6 +393,10 @@
 			if(0 <= index && index < this.playlist.length) {
 				this.current = index;
 				this._highlight(index);
+                $('html,body').animate({
+                    scrollTop: $(this.cssSelector.playlist + " li:nth-child(" + (index + 1) + ")").offset().top - 
+                        $('.jp-playlist').offset().top
+                }, 1000);
 				$(this.cssSelector.jPlayer).jPlayer("setMedia", this.playlist[this.current]);
 			} else {
 				this.current = 0;
@@ -414,6 +418,10 @@
 		},
 		next: function() {
 			var index = (this.current + 1 < this.playlist.length) ? this.current + 1 : 0;
+
+            if (this.shuffled) {
+                index = Math.floor(Math.random()*this.playlist.length);
+            }
 
 			if(this.loop) {
 				// See if we need to shuffle before looping to start, and only shuffle if more than 1 item.
@@ -444,26 +452,7 @@
 			}
 
 			if(shuffled || shuffled !== this.shuffled) {
-
-				$(this.cssSelector.playlist + " ul").slideUp(this.options.playlistOptions.shuffleTime, function() {
 					self.shuffled = shuffled;
-					if(shuffled) {
-						self.playlist.sort(function() {
-							return 0.5 - Math.random();
-						});
-					} else {
-						self._originalPlaylist();
-					}
-					self._refresh(true); // Instant
-
-					if(playNow || !$(self.cssSelector.jPlayer).data("jPlayer").status.paused) {
-						self.play(0);
-					} else {
-						self.select(0);
-					}
-
-					$(this).slideDown(self.options.playlistOptions.shuffleTime);
-				});
 			}
 		}
 	};

@@ -2,6 +2,12 @@
 
 Support for [Zepto](http://zeptojs.com/) 1.0+ compiled with the data module.
 
+## This fork
+
+This fork changes the shuffle behaviour so that the playlist renders in original order always,
+but the player will jump to a random song when Shuffle is enabled. (Originally, Shuffle randomised the
+order of the playlist, and then played through the new playlist sequentially.)
+
 ## What is jPlayer?
 
 ### jPlayer is a jQuery/Zepto plugin that allows you to:
